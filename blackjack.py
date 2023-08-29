@@ -32,12 +32,26 @@ for _ in range(2):
     user_cards.append(deal_card())
     computer_cards.append(deal_card())
 
-user_score = calculate_score(user_cards)
-computer_score = calculate_score(computer_cards)
+# Kart çekme işlemini isteğe bağlı devam ettirecek while döngüsü:
+while not is_game_over:
+    user_score = calculate_score(user_cards)
+    computer_score = calculate_score(computer_cards)
 
-print(f"    Your cards : {user_cards}, current score : {user_score}")
-print(f"    Computer's first card : {computer_cards[0]}")
+    print(f"    Your cards : {user_cards}, current score : {user_score}")
+    print(f"    Computer's first card : {computer_cards[0]}")
 
-# Oyun sonu şartlarını taşıyan koşul:
-if user_score == 0 or computer_score == 0 or user_score > 21:
-    is_game_over = True
+    # Oyun sonu şartlarını taşıyan koşul:
+    if user_score == 0 or computer_score == 0 or user_score > 21:
+        is_game_over = True
+    else:
+        # Oyun sonu koşulu sağlanmazsa kart çekme sorusu:
+        user_should_deal = input("Type 'y' to get another card, type 'n' to pass: ")
+        if user_should_deal == 'y':
+            user_cards.append(deal_card())
+        else:
+            is_game_over = True
+
+# Bilgisayarın kartları 0 ile 17 arasındaysa onun destesine otomatik kart ekleyecek while döngüsü:
+while computer_score != 0 and computer_score < 17:
+    computer_cards.append(deal_card())
+    computer_score = calculate_score(computer_cards)
